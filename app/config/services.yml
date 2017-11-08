@@ -33,3 +33,12 @@ services:
         class: AppBundle\Service\SerializerService
         public: true
         tags: ['serialize.json']
+        calls:
+            - method: test
+
+    serialize.service:
+        class: AppBundle\Service\SerializerService
+        public: true
+        factory: 'AppBundle\Service\SerializerFactory:createSerializer'
+        arguments:
+            - 'xml'

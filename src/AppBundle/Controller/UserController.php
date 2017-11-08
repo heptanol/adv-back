@@ -29,7 +29,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
     public function getUserAction($id = null)
     {
         if (!empty($id)) {
-            return  $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+            return  $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['username'=> $id]);
         }
         return  $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
     }

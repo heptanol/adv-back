@@ -14,5 +14,17 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 class DefaultController extends FOSRestController implements ClassResourceInterface
 {
-    
+    /**
+     * @Rest\View()
+     * @Rest\Get("/date")
+     */
+    public function timeAction()
+    {
+        $data = new User();
+        $data->setUsername('game');
+        $ser = $this->get('serialize.service')->serialize($data);
+        dump($ser);
+        dump(new \DateTime());
+        die;
+    }
 }

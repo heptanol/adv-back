@@ -7,10 +7,10 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 /**
- * Class SerializerService
+ * Class JsonSerializerService
  * @package AppBundle\Service
  */
-class SerializerService
+class JsonSerializerService
 {
     /**
      * @var Serializer
@@ -24,15 +24,6 @@ class SerializerService
     {
         $this->serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
     }
-
-    /**
-     * @param $data
-     * @return string|\Symfony\Component\Serializer\Encoder\scalar
-     */
-    public function toJson($data)
-    {
-        return $this->serializer->serialize($data, JsonEncoder::FORMAT);
-    }
     
     /**
      * @param $data
@@ -43,8 +34,4 @@ class SerializerService
         return $this->serializer->serialize($data, JsonEncoder::FORMAT);
     }
 
-    public function test()
-    {
-        echo 'call marche bien';
-    }
 }
