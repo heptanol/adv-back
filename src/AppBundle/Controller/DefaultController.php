@@ -27,4 +27,22 @@ class DefaultController extends FOSRestController implements ClassResourceInterf
         dump(new \DateTime());
         die;
     }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/email")
+     */
+    public function sendMailAction()
+    {
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('send@example.com')
+            ->setTo('thamine.alaeddine@gmail.com')
+            ->setBody(
+                $this->renderView(
+                    'AppBundle:Emails:registration.html.twig'
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
+    }
 }

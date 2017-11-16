@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\User;
+use AppBundle\Model\Message;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,5 +33,44 @@ class UserController extends FOSRestController implements ClassResourceInterface
             return  $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['username'=> $id]);
         }
         return  $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Post("/register")
+     */
+    public function registerAction(Request $request)
+    {
+
+        $userManager = $this->get('fos_user.user_manager');
+        $encoder = $this->get('security.encoder_factory')->getEncoder(User::class);
+
+        $email_exist = $userManager->findUserByEmail($request->get('email'));
+        $user_exist = $userManager->findUserByUsername($request->get('username'));
+
+        if ($email_exist) {
+            return new Message('Email existe déja', Message::ERROR);
+        }
+
+        if ($user_exist) {
+            return new Message('Username existe déja', Message::ERROR);
+        }
+
+        /* @var $user User */
+        $user = $userManager->createUser();
+        $user->setUsername($request->get('username'));
+        $user->setPassword($encoder->encodePassword($request->get('password'), ''));
+        $user->setEmail($request->get('email'));
+        $user->setFirstName($request->get('firstName'));
+        $user->setLastName($request->get('lastName'));
+        $user->setSex($request->get('sex'));
+        $user->setBirthDate($request->get('birthdate'));
+        $user->setConfirmationToken(md5($request->get('username') . $request->get('firstName') . $request->get('lastName')));
+
+        $userManager->updateUser($user);
+
+        $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
+
+        return new Message('User créer', Message::SUCCESS);
     }
 }

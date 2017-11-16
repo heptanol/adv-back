@@ -24,13 +24,7 @@ class User extends BaseUser
      * @Groups({"user"})
      */
     protected $email;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"user"})
-     */
-    protected $fullname;
-
+    
     /**
      * @Groups({"user-write"})
      */
@@ -41,22 +35,96 @@ class User extends BaseUser
      */
     protected $username;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
+     */
+    protected $sex;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $birthDate;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
 
-    public function setFullname($fullname)
+    /**
+     * @return mixed
+     */
+    public function getBirthDate()
     {
-        $this->fullname = $fullname;
+        return $this->birthDate;
+    }
 
-        return $this;
-    }
-    public function getFullname()
+    /**
+     * @param mixed $birthDate
+     */
+    public function setBirthDate($birthDate)
     {
-        return $this->fullname;
+        $this->birthDate = $birthDate;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSex()
+    {
+        return $this->sex;
+    }
+
+    /**
+     * @param mixed $sex
+     */
+    public function setSex($sex)
+    {
+        $this->sex = $sex;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+    
 
     public function isUser(UserInterface $user = null)
     {
