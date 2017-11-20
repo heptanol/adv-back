@@ -55,6 +55,11 @@ class User extends BaseUser
      */
     protected $birthDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Node", mappedBy="user")
+     */
+    protected $nodes;
+
     public function __construct()
     {
         parent::__construct();
@@ -123,6 +128,22 @@ class User extends BaseUser
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNodes()
+    {
+        return $this->nodes;
+    }
+
+    /**
+     * @param mixed $nodes
+     */
+    public function setNodes($nodes)
+    {
+        $this->nodes = $nodes;
     }
     
 

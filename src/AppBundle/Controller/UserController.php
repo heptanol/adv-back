@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Node;
 use AppBundle\Entity\User;
 use AppBundle\Model\Message;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -79,5 +80,15 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
 
         return new Message('User créer', Message::SUCCESS);
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/nodes/{id}", defaults={"id" = null})
+     */
+    public function nodesAction($id = null)
+    {
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['username'=> $id]);
+        return $this->getDoctrine()->getRepository(Node::class)->findBy(['user'=> $user->getId()]);
     }
 }
