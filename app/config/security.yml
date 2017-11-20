@@ -43,5 +43,7 @@ security:
         - { path: ^/api/email, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register/confirm, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register/confirmed, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/user, roles: [ ROLE_READER ] }
         - { path: ^/api, roles: [ ROLE_READER ] }

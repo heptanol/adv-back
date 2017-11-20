@@ -13,6 +13,7 @@ use AppBundle\Entity\User;
 use AppBundle\Model\Message;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,20 +57,26 @@ class UserController extends FOSRestController implements ClassResourceInterface
             return new Message('Username existe déja', Message::ERROR);
         }
 
-        /* @var $user User */
-        $user = $userManager->createUser();
-        $user->setUsername($request->get('username'));
-        $user->setPassword($encoder->encodePassword($request->get('password'), ''));
-        $user->setEmail($request->get('email'));
-        $user->setFirstName($request->get('firstName'));
-        $user->setLastName($request->get('lastName'));
-        $user->setSex($request->get('sex'));
-        $user->setBirthDate($request->get('birthdate'));
-        $user->setConfirmationToken(md5($request->get('username') . $request->get('firstName') . $request->get('lastName')));
+        try {
+            /* @var $user User */
+            $user = $userManager->createUser();
+            $user->setUsername($request->get('username'));
+            $user->setPassword($encoder->encodePassword($request->get('password'), ''));
+            $user->setEmail($request->get('email'));
+            $user->setFirstName($request->get('firstName'));
+            $user->setLastName($request->get('lastName'));
+            $user->setSex($request->get('sex'));
+            $user->setBirthDate(new \DateTime($request->get('birthdate')));
+            $user->setRoles(array('ROLE_READER'));
+            $user->setConfirmationToken(md5($request->get('username') . $request->get('firstName') . $request->get('lastName')));
 
-        $userManager->updateUser($user);
+            $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
+            $userManager->updateUser($user);
 
-        $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
+        } catch (Exception $e) {
+            return new Message($e->getMessage(), Message::ERROR);
+        }
+
 
         return new Message('User créer', Message::SUCCESS);
     }
