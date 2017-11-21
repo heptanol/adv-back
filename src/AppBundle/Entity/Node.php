@@ -40,14 +40,14 @@ abstract class Node
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="string", length=255)
+     * @ORM\Column(type="decimal", precision=18, scale=12)
      */
     private $latitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="string", length=255)
+     * @ORM\Column(type="decimal", precision=18, scale=12)
      */
     private $longitude;
 
