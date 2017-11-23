@@ -44,6 +44,10 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $user->setRoles(array('ROLE_READER'));
         $user->setEmail('user@gmail.com');
         $user->setPassword($encoder->encodePassword('pass', ''));
+        $user->setFirstName('Alaeddine');
+        $user->setLastName('Thamine');
+        $user->setBirthDate(new \DateTime());
+        $user->setSex('homme');
         $user->setEnabled(true);
 
 
@@ -61,10 +65,18 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image2->setTitle('Boulogne-Billancourt');
         $image2->setUser($user);
 
+        $image3 = new Image();
+        $image3->setLatitude('41.820455');
+        $image3->setLongitude('12.5354');
+        $image3->setImage('http://www.lanouvellegamme.fr/photo/art/grande/9111608-14498973.jpg');
+        $image3->setTitle('Via del Casale Marini');
+        $image3->setUser($user);
+
         $manager->persist($admin);
         $manager->persist($user);
         $manager->persist($image1);
         $manager->persist($image2);
+        $manager->persist($image3);
 
         $manager->flush();
     }
