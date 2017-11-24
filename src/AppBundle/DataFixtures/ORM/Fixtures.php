@@ -97,7 +97,40 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image3->setLongitude('12.5354');
         $image3->setImage('http://www.lanouvellegamme.fr/photo/art/grande/9111608-14498973.jpg');
         $image3->setTitle('Via del Casale Marini');
+        $image3->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
         $image3->setUser($user);
+
+        $image4 = new Image();
+        $image4->setLatitude('36.8064948');
+        $image4->setLongitude('10.181531599999971');
+        $image4->setImage('http://content.maltatoday.com.mt/ui_frontend/thumbnail/684/0/4_tunis.jpg');
+        $image4->setTitle('Tunis');
+        $image4->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
+        $image4->setUser($user1);
+
+        $image5 = new Image();
+        $image5->setLatitude('35.82450290000001');
+        $image5->setLongitude('10.634584000000018');
+        $image5->setImage('http://www.tunisiepromo.com/wp-content/uploads/2014/11/sousse.jpg');
+        $image5->setTitle('Sousse Tunisie');
+        $image5->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
+        $image5->setUser($user1);
+
+        $image6 = new Image();
+        $image6->setLatitude('64.963051');
+        $image6->setLongitude('-19.020835000000034');
+        $image6->setImage('https://www.nationalgeographic.com/content/dam/travel/Guide-Pages/europe/Iceland/iceland_NationalGeographic_2168279.adapt.1900.1.jpg');
+        $image6->setTitle('Iceland');
+        $image6->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
+        $image6->setUser($user12);
+
+        $image7 = new Image();
+        $image7->setLatitude('60.47202399999999');
+        $image7->setLongitude('8.46894599999996');
+        $image7->setImage('https://i2.wp.com/www.luxeinacity.com/wp-content/uploads/2015/05/Explore-Norway-Nature-Islands.jpg');
+        $image7->setTitle('Norway');
+        $image7->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
+        $image7->setUser($user12);
 
         $manager->persist($admin);
         $manager->persist($user1);
@@ -106,6 +139,10 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $manager->persist($image1);
         $manager->persist($image2);
         $manager->persist($image3);
+        $manager->persist($image4);
+        $manager->persist($image5);
+        $manager->persist($image6);
+        $manager->persist($image7);
 
         $manager->flush();
     }
