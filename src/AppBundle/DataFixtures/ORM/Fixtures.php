@@ -39,7 +39,6 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $admin->setEnabled(true);
 
 
-
         $user = new User();
         $user->setUsername('heptanol');
         $user->setRoles(array('ROLE_READER'));
@@ -49,7 +48,10 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $user->setLastName('Thamine');
         $user->setBirthDate(new \DateTime());
         $user->setSex('homme');
+        $user->setAboutMe('Lorem ipsum dolor sit amet, consecte Hac ex causa conlaticia stipe Valerius humatur ille Publicola et subsidiis amicorum mariti inops cum liberis uxor alitur Reguli et dotatur ex aerario filia Scipionis, cum nobilitas florem adultae virginis diuturnum absentia pauperis erubesceret patris.');
         $user->setEnabled(true);
+        $user->setProfilePic('https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAcDAAAAJGJlMmM0NzEwLTU1MWEtNDJhMC05NmE1LWFiNTE2MWQyNDQ0Yw.jpg');
+        $user->setCoverPic('https://tctechcrunch2011.files.wordpress.com/2014/06/planeflying.jpg');
 
         $user1 = new User();
         $user1->setUsername('bah');

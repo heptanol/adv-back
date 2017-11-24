@@ -6,6 +6,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -54,6 +55,29 @@ class User extends BaseUser
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $birthDate;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $aboutMe;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Image
+     */
+    protected $profilePic;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Image
+     */
+    protected $coverPic;
 
     /**
      * @ORM\OneToMany(targetEntity="Node", mappedBy="user")
@@ -148,6 +172,54 @@ class User extends BaseUser
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAboutMe()
+    {
+        return $this->aboutMe;
+    }
+
+    /**
+     * @param mixed $aboutMe
+     */
+    public function setAboutMe($aboutMe)
+    {
+        $this->aboutMe = $aboutMe;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCoverPic()
+    {
+        return $this->coverPic;
+    }
+
+    /**
+     * @param mixed $coverPic
+     */
+    public function setCoverPic($coverPic)
+    {
+        $this->coverPic = $coverPic;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfilePic()
+    {
+        return $this->profilePic;
+    }
+
+    /**
+     * @param mixed $profilePic
+     */
+    public function setProfilePic($profilePic)
+    {
+        $this->profilePic = $profilePic;
     }
 
     /**
