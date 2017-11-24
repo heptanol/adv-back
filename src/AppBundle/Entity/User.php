@@ -60,6 +60,26 @@ class User extends BaseUser
      */
     protected $nodes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="follows",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="follows_user_id", referencedColumnName="id")}
+     * )
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $follows;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="followedby",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="followedby_user_id", referencedColumnName="id")}
+     * )
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $followedBy;
+
     public function __construct()
     {
         parent::__construct();
@@ -151,4 +171,38 @@ class User extends BaseUser
     {
         return $user instanceof self && $user->id === $this->id;
     }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getFollows()
+    {
+        return $this->follows;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $follows
+     */
+    public function setFollows($follows)
+    {
+        $this->follows = $follows;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getFollowedBy()
+    {
+        return $this->followedBy;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $followedBy
+     */
+    public function setFollowedBy($followedBy)
+    {
+        $this->followedBy = $followedBy;
+    }
+
+
 }

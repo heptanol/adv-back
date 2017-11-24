@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Node
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\NodeRepository")
+ * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({ "image" = "Image"})
@@ -36,6 +36,20 @@ abstract class Node
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
 
     /**
      * @var string
@@ -85,6 +99,39 @@ abstract class Node
     {
         return $this->title;
     }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
 
     /**
      * Set latitude
