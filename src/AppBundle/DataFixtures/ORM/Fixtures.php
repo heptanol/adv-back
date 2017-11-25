@@ -134,6 +134,15 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image7->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
         $image7->setUser($user12);
 
+        $image8 = new Image();
+        $image8->setLatitude('60.47202399999999');
+        $image8->setLongitude('8.46894599999996');
+        $image8->setImage('https://i2.wp.com/www.luxeinacity.com/wp-content/uploads/2015/05/Explore-Norway-Nature-Islands.jpg');
+        $image8->setTitle('Norway');
+        $image8->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
+        $image8->setUser($user);
+
+
         $manager->persist($admin);
         $manager->persist($user1);
         $manager->persist($user12);
@@ -145,6 +154,20 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $manager->persist($image5);
         $manager->persist($image6);
         $manager->persist($image7);
+        $manager->persist($image8);
+
+        $minLat = 43.421009 * 1000000;
+        $maxLat = 70.951220 * 1000000;
+        $minLgt =  -1.582031 * 1000000;
+        $maxLgt =  36.767578 * 1000000;
+
+        for ($i = 0; $i < 1000 ; $i++) {
+            $im = new Image(mt_rand($minLat, $maxLat)/1000000, mt_rand($minLgt, $maxLgt)/1000000);
+            $im->setTitle('test');
+            $im->setImage('https://i2.wp.com/www.luxeinacity.com/wp-content/uploads/2015/05/Explore-Norway-Nature-Islands.jpg');
+            $im->setUser($user);
+            $manager->persist($im);
+        }
 
         $manager->flush();
     }

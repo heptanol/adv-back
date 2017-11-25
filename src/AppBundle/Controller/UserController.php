@@ -89,6 +89,6 @@ class UserController extends FOSRestController implements ClassResourceInterface
     public function nodesAction($id = null)
     {
         $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['username'=> $id]);
-        return $this->getDoctrine()->getRepository(Node::class)->findBy(['user'=> $user->getId()]);
+        return $this->getDoctrine()->getRepository(Node::class)->findNodePositionByUser($user->getId());
     }
 }

@@ -8,13 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
  * Node
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\NodeRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({ "image" = "Image"})
  */
 abstract class Node
 {
+
     /**
      * @var int
      *
@@ -25,7 +26,7 @@ abstract class Node
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="nodes")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="nodes", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -52,18 +53,29 @@ abstract class Node
     private $createdAt;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(type="decimal", precision=18, scale=12)
+     * @ORM\Column(type="float", precision=18, scale=12)
      */
     private $latitude;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(type="decimal", precision=18, scale=12)
+     * @ORM\Column(type="float", precision=18, scale=12)
      */
     private $longitude;
+
+    /**
+     * Node constructor.
+     * @param float $latitude
+     * @param float $longitude
+     */
+    public function __construct($latitude = 0.0, $longitude = 0.0)
+    {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+    }
 
 
     /**
@@ -150,7 +162,7 @@ abstract class Node
     /**
      * Get latitude
      *
-     * @return string
+     * @return float
      */
     public function getLatitude()
     {
@@ -174,7 +186,7 @@ abstract class Node
     /**
      * Get longitude
      *
-     * @return string
+     * @return float
      */
     public function getLongitude()
     {
@@ -196,6 +208,6 @@ abstract class Node
     {
         $this->user = $user;
     }
-    
+
 }
 
