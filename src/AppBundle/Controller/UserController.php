@@ -29,12 +29,12 @@ class UserController extends FOSRestController implements ClassResourceInterface
      * @Rest\View()
      * @Rest\Get("/user/{id}", defaults={"id" = null})
      */
-    public function getUserAction($id = null)
+    public function getAction($id = null)
     {
         if (!empty($id)) {
-            return  $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['username'=> $id]);
+            return  $this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=> $id]);
         }
-        return  $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+        return  $this->getDoctrine()->getRepository(User::class)->findAll();
     }
 
     /**
@@ -84,11 +84,11 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
     /**
      * @Rest\View()
-     * @Rest\Get("/nodes/{id}", defaults={"id" = null})
+     * @Rest\Get("/user/{id}/nodes", defaults={"id" = null})
      */
     public function nodesAction($id = null)
     {
-        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['username'=> $id]);
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=> $id]);
         return $this->getDoctrine()->getRepository(Node::class)->findNodePositionByUser($user->getId());
     }
 }

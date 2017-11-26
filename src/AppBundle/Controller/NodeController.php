@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Node;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,5 +15,15 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 class NodeController extends FOSRestController implements ClassResourceInterface
 {
-    
+    /**
+     * @Rest\View()
+     * @Rest\Get("/node/{id}", defaults={"id" = null})
+     */
+    public function getAction($id = null)
+    {
+        if (!empty($id)) {
+            return  $this->getDoctrine()->getRepository(Node::class)->find($id);
+        }
+        return  $this->getDoctrine()->getRepository(Node::class)->findAll();
+    }
 }
