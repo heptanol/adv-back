@@ -80,12 +80,12 @@ class User extends BaseUser
     protected $coverPic;
 
     /**
-     * @ORM\OneToMany(targetEntity="Node", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Node", mappedBy="user", fetch="EXTRA_LAZY")
      */
     protected $nodes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\ManyToMany(targetEntity="User", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="follows",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="follows_user_id", referencedColumnName="id")}
@@ -95,7 +95,7 @@ class User extends BaseUser
     protected $follows;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\ManyToMany(targetEntity="User", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="followedby",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="followedby_user_id", referencedColumnName="id")}
