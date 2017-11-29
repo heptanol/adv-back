@@ -20,11 +20,9 @@ class DefaultController extends FOSRestController implements ClassResourceInterf
      */
     public function timeAction()
     {
-        $data = new User();
-        $data->setUsername('game');
-        $ser = $this->get('serialize.service')->serialize($data);
-        dump($ser);
-        dump(new \DateTime());
+
+        dump($this->getDoctrine()->getRepository(User::class)->findIFollow(4));
+        dump($this->getDoctrine()->getRepository(User::class)->findFollowMe(4));
         die;
     }
 

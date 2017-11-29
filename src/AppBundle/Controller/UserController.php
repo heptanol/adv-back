@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: PV5355
- * Date: 31/10/2017
- * Time: 16:08
- */
 
 namespace AppBundle\Controller;
 
@@ -32,9 +26,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
     public function getAction($id = null)
     {
         if (!empty($id)) {
-            return  $this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=> $id]);
+            return  $this->getDoctrine()->getRepository(User::class)->findByUsernameDetails($id);
         }
-        return  $this->getDoctrine()->getRepository(User::class)->findAll();
+        return  $this->getDoctrine()->getRepository(User::class)->findAllDetails();
     }
 
     /**
@@ -90,5 +84,47 @@ class UserController extends FOSRestController implements ClassResourceInterface
     {
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=> $id]);
         return $this->getDoctrine()->getRepository(Node::class)->findNodePositionByUser($user->getId());
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/user/{id}/i-follow")
+     */
+    public function getIFollow($id)
+    {
+        return $this->getDoctrine()->getRepository(User::class)->findIFollow($id);
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/user/{id}/follows-me")
+     */
+    public function getFollowsMe($id)
+    {
+        return $this->getDoctrine()->getRepository(User::class)->findFollowsMe($id);
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/user/{iFollowId}/follows/{followsMeId}")
+     */
+    public function followAction($iFollowId, $followsMeId)
+    {
+        $iFollow = $this->getDoctrine()->getRepository(User::class)->find($iFollowId);
+        $followsMe = $this->getDoctrine()->getRepository(User::class)->find($followsMeId);
+
+        $followsList = $iFollow->getIFollow();
+        $followsList->add($followsMe);
+
+        $iFollow->setIFollow($followsList);
+
+
+        try {
+            $this->getDoctrine()->getManager()->persist($iFollow);
+        } catch (Exception $e) {
+            return new Message($e->getMessage(), Message::ERROR);
+        }
+
+        return new Message('OK', Message::SUCCESS);
     }
 }

@@ -4,13 +4,14 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="fos_user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Table(name="fos_user", indexes={@Index(name="username_index", columns={"username"})})
  */
 class User extends BaseUser
 {
@@ -57,6 +58,11 @@ class User extends BaseUser
     protected $birthDate;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $createdAt;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $aboutMe;
@@ -85,24 +91,19 @@ class User extends BaseUser
     protected $nodes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="follows",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="follows_user_id", referencedColumnName="id")}
-     * )
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="iFollow")
      */
-    protected $follows;
+    private $followsMe;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="followedby",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="followedby_user_id", referencedColumnName="id")}
-     * )
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="followsMe")
+     * @ORM\JoinTable(name="follows",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="followed_user_id", referencedColumnName="id")}
+     *      )
      */
-    protected $followedBy;
+    private $iFollow;
+
 
     public function __construct()
     {
@@ -124,6 +125,22 @@ class User extends BaseUser
     public function setBirthDate($birthDate)
     {
         $this->birthDate = $birthDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -245,36 +262,36 @@ class User extends BaseUser
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return mixed
      */
-    public function getFollows()
+    public function getFollowsMe()
     {
-        return $this->follows;
+        return $this->followsMe;
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $follows
+     * @param mixed $followsMe
      */
-    public function setFollows($follows)
+    public function setFollowsMe($followsMe)
     {
-        $this->follows = $follows;
+        $this->followsMe = $followsMe;
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return mixed
      */
-    public function getFollowedBy()
+    public function getIFollow()
     {
-        return $this->followedBy;
+        return $this->iFollow;
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $followedBy
+     * @param mixed $iFollow
      */
-    public function setFollowedBy($followedBy)
+    public function setIFollow($iFollow)
     {
-        $this->followedBy = $followedBy;
+        $this->iFollow = $iFollow;
     }
 
-
+   
 }

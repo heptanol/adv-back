@@ -67,14 +67,10 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $user12->setPassword($encoder->encodePassword('pass', ''));
         $user12->setEnabled(true);
 
-        $userFollowers = new ArrayCollection();
-        $userFollowers->add($user1);
-        $userFollowers->add($user12);
         $userFollows = new ArrayCollection();
         $userFollows->add($user1);
-        $user->setFollows($userFollows);
-        $user->setFollowedBy($userFollowers);
-
+        $userFollows->add($user12);
+        $user->setIFollow($userFollows);
 
         $image1 = new Image();
         $image1->setLatitude('48.8265384');
