@@ -29,6 +29,7 @@ class UserRepository extends EntityRepository
     public function findIFollow($id)
     {
         return $this->createQueryBuilder('u')
+            ->select('u.id', 'u.username', 'u.profilePic')
             ->join('u.followsMe', 'f')
             ->where('f.id = :id')
             ->setParameter('id', $id)
@@ -39,6 +40,7 @@ class UserRepository extends EntityRepository
     public function findFollowsMe($id)
     {
         return $this->createQueryBuilder('u')
+            ->select('u.id', 'u.username', 'u.profilePic')
             ->join('u.iFollow', 'f')
             ->where('f.id = :id')
             ->setParameter('id', $id)

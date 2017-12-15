@@ -67,8 +67,31 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $dolodes->setPassword($encoder->encodePassword('pass', ''));
         $dolodes->setEnabled(true);
 
+        $nameless = new User();
+        $nameless->setUsername('nameless');
+        $nameless->setRoles(array('ROLE_READER'));
+        $nameless->setEmail('nameless@gmail.com');
+        $nameless->setPassword($encoder->encodePassword('pass', ''));
+        $nameless->setEnabled(true);
+
+        $jeff = new User();
+        $jeff->setUsername('jeff');
+        $jeff->setRoles(array('ROLE_READER'));
+        $jeff->setEmail('jeff@gmail.com');
+        $jeff->setPassword($encoder->encodePassword('pass', ''));
+        $jeff->setEnabled(true);
+
+        $gary = new User();
+        $gary->setUsername('gary');
+        $gary->setRoles(array('ROLE_READER'));
+        $gary->setEmail('gary@gmail.com');
+        $gary->setPassword($encoder->encodePassword('pass', ''));
+        $gary->setEnabled(true);
+
         $userFollows = new ArrayCollection();
         $userFollows->add($dolodes);
+        $userFollows->add($gary);
+        $userFollows->add($jeff);
         $user->setIFollow($userFollows);
 
         $image1 = new Image();
@@ -142,6 +165,9 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $manager->persist($bah);
         $manager->persist($dolodes);
         $manager->persist($user);
+        $manager->persist($nameless);
+        $manager->persist($jeff);
+        $manager->persist($gary);
         $manager->persist($image1);
         $manager->persist($image2);
         $manager->persist($image3);

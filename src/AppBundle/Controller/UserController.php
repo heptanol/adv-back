@@ -87,25 +87,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
     /**
      * @Rest\View()
-     * @Rest\Get("/user/{id}/i-follow")
-     */
-    public function getIFollow($id)
-    {
-        return $this->getDoctrine()->getRepository(User::class)->findIFollow($id);
-    }
-
-    /**
-     * @Rest\View()
-     * @Rest\Get("/user/{id}/follows-me")
-     */
-    public function getFollowsMe($id)
-    {
-        return $this->getDoctrine()->getRepository(User::class)->findFollowsMe($id);
-    }
-
-    /**
-     * @Rest\View()
-     * @Rest\Get("/user/follows/{id}")
+     * @Rest\Get("/user/{id}/follows")
      */
     public function followAction($id)
     {
@@ -128,7 +110,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
     }
     /**
      * @Rest\View()
-     * @Rest\Get("/user/abort-follows/{id}")
+     * @Rest\Get("/user/{id}/abort-follows")
      */
     public function abortFollowAction($id)
     {
@@ -149,5 +131,23 @@ class UserController extends FOSRestController implements ClassResourceInterface
         }
 
         return new Message('OK', Message::SUCCESS);
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/user/{id}/i-follow")
+     */
+    public function getIFollowAction($id)
+    {
+        return $this->getDoctrine()->getRepository(User::class)->findIFollow($id);
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/user/{id}/follows-me")
+     */
+    public function getFollowsMeAction($id)
+    {
+        return $this->getDoctrine()->getRepository(User::class)->findFollowsMe($id);
     }
 }
