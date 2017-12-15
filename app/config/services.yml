@@ -42,3 +42,14 @@ services:
         factory: 'AppBundle\Service\SerializerFactory:createSerializer'
         arguments:
             - 'xml'
+
+    AppBundle\Repository\UserRepository:
+        public: true
+        factory: 'Doctrine\ORM\EntityManagerInterface:getRepository'
+        arguments:
+            - 'AppBundle\Entity\User'
+
+    AppBundle\Service\UserService:
+        public: true
+        arguments:
+            - '@AppBundle\Repository\UserRepository'

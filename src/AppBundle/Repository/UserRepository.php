@@ -11,7 +11,7 @@ class UserRepository extends EntityRepository
     public function findByUsernameDetails($username)
     {
         return $this->createQueryBuilder('u')
-            ->select('u.username', 'u.firstName', 'u.lastName', 'u.birthDate', 'u.createdAt', 'u.sex', 'u.aboutMe', 'u.coverPic', 'u.profilePic')
+            ->select('u.id', 'u.username', 'u.firstName', 'u.lastName', 'u.birthDate', 'u.createdAt', 'u.sex', 'u.aboutMe', 'u.coverPic', 'u.profilePic')
             ->where('u.username = :username')
             ->setParameter('username', $username)
             ->getQuery()

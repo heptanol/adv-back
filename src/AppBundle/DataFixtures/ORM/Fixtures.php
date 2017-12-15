@@ -53,23 +53,22 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $user->setProfilePic('https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAcDAAAAJGJlMmM0NzEwLTU1MWEtNDJhMC05NmE1LWFiNTE2MWQyNDQ0Yw.jpg');
         $user->setCoverPic('https://tctechcrunch2011.files.wordpress.com/2014/06/planeflying.jpg');
 
-        $user1 = new User();
-        $user1->setUsername('bah');
-        $user1->setRoles(array('ROLE_READER'));
-        $user1->setEmail('bah@gmail.com');
-        $user1->setPassword($encoder->encodePassword('pass', ''));
-        $user1->setEnabled(true);
+        $bah = new User();
+        $bah->setUsername('bah');
+        $bah->setRoles(array('ROLE_READER'));
+        $bah->setEmail('bah@gmail.com');
+        $bah->setPassword($encoder->encodePassword('pass', ''));
+        $bah->setEnabled(true);
 
-        $user12 = new User();
-        $user12->setUsername('dolodes');
-        $user12->setRoles(array('ROLE_READER'));
-        $user12->setEmail('dolodes@gmail.com');
-        $user12->setPassword($encoder->encodePassword('pass', ''));
-        $user12->setEnabled(true);
+        $dolodes = new User();
+        $dolodes->setUsername('dolodes');
+        $dolodes->setRoles(array('ROLE_READER'));
+        $dolodes->setEmail('dolodes@gmail.com');
+        $dolodes->setPassword($encoder->encodePassword('pass', ''));
+        $dolodes->setEnabled(true);
 
         $userFollows = new ArrayCollection();
-        $userFollows->add($user1);
-        $userFollows->add($user12);
+        $userFollows->add($dolodes);
         $user->setIFollow($userFollows);
 
         $image1 = new Image();
@@ -104,7 +103,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image4->setImage('http://content.maltatoday.com.mt/ui_frontend/thumbnail/684/0/4_tunis.jpg');
         $image4->setTitle('Tunis');
         $image4->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
-        $image4->setUser($user1);
+        $image4->setUser($bah);
 
         $image5 = new Image();
         $image5->setLatitude('35.82450290000001');
@@ -112,7 +111,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image5->setImage('http://www.tunisiepromo.com/wp-content/uploads/2014/11/sousse.jpg');
         $image5->setTitle('Sousse Tunisie');
         $image5->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
-        $image5->setUser($user1);
+        $image5->setUser($bah);
 
         $image6 = new Image();
         $image6->setLatitude('64.963051');
@@ -120,7 +119,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image6->setImage('https://www.nationalgeographic.com/content/dam/travel/Guide-Pages/europe/Iceland/iceland_NationalGeographic_2168279.adapt.1900.1.jpg');
         $image6->setTitle('Iceland');
         $image6->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
-        $image6->setUser($user12);
+        $image6->setUser($dolodes);
 
         $image7 = new Image();
         $image7->setLatitude('60.47202399999999');
@@ -128,7 +127,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image7->setImage('https://i2.wp.com/www.luxeinacity.com/wp-content/uploads/2015/05/Explore-Norway-Nature-Islands.jpg');
         $image7->setTitle('Norway');
         $image7->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
-        $image7->setUser($user12);
+        $image7->setUser($dolodes);
 
         $image8 = new Image();
         $image8->setLatitude('60.47202399999999');
@@ -140,8 +139,8 @@ class Fixtures extends Fixture implements ContainerAwareInterface
 
 
         $manager->persist($admin);
-        $manager->persist($user1);
-        $manager->persist($user12);
+        $manager->persist($bah);
+        $manager->persist($dolodes);
         $manager->persist($user);
         $manager->persist($image1);
         $manager->persist($image2);

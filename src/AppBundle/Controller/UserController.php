@@ -6,6 +6,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Node;
 use AppBundle\Entity\User;
 use AppBundle\Model\Message;
+use AppBundle\Service\UserService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -23,12 +25,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
      * @Rest\View()
      * @Rest\Get("/user/{id}", defaults={"id" = null})
      */
-    public function getAction($id = null)
+    public function getAction($id)
     {
-        if (!empty($id)) {
-            return  $this->getDoctrine()->getRepository(User::class)->findByUsernameDetails($id);
-        }
-        return  $this->getDoctrine()->getRepository(User::class)->findAllDetails();
+        return  $this->get(UserService::class)->getPublicData($this->getUser(), $id);
     }
 
     /**
@@ -106,21 +105,45 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
     /**
      * @Rest\View()
-     * @Rest\Get("/user/{iFollowId}/follows/{followsMeId}")
+     * @Rest\Get("/user/follows/{id}")
      */
-    public function followAction($iFollowId, $followsMeId)
+    public function followAction($id)
     {
-        $iFollow = $this->getDoctrine()->getRepository(User::class)->find($iFollowId);
-        $followsMe = $this->getDoctrine()->getRepository(User::class)->find($followsMeId);
+        $iFollow = $this->getUser();
+        $followsMe = $this->getDoctrine()->getRepository(User::class)->find($id);
 
         $followsList = $iFollow->getIFollow();
         $followsList->add($followsMe);
 
         $iFollow->setIFollow($followsList);
 
+        try {
+            $this->getDoctrine()->getManager()->persist($iFollow);
+            $this->getDoctrine()->getManager()->flush();
+        } catch (Exception $e) {
+            return new Message($e->getMessage(), Message::ERROR);
+        }
+
+        return new Message('OK', Message::SUCCESS);
+    }
+    /**
+     * @Rest\View()
+     * @Rest\Get("/user/abort-follows/{id}")
+     */
+    public function abortFollowAction($id)
+    {
+        /** @var User $iFollow */
+        $iFollow = $this->getUser();
+        $followsMe = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        $followsList = $iFollow->getIFollow();
+        $followsList->removeElement($followsMe);
+
+        $iFollow->setIFollow($followsList);
 
         try {
             $this->getDoctrine()->getManager()->persist($iFollow);
+            $this->getDoctrine()->getManager()->flush();
         } catch (Exception $e) {
             return new Message($e->getMessage(), Message::ERROR);
         }

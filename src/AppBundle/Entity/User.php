@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
@@ -108,7 +109,8 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $this->followsMe = new ArrayCollection();
+        $this->iFollow = new ArrayCollection();
     }
 
     /**
@@ -262,7 +264,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getFollowsMe()
     {
@@ -270,7 +272,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $followsMe
+     * @param ArrayCollection $followsMe
      */
     public function setFollowsMe($followsMe)
     {
@@ -278,7 +280,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getIFollow()
     {
@@ -286,7 +288,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $iFollow
+     * @param ArrayCollection $iFollow
      */
     public function setIFollow($iFollow)
     {
