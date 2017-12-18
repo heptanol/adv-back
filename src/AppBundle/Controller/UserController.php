@@ -77,14 +77,14 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
     /**
      * @Rest\View()
-     * @Rest\Get("/user/{id}/nodes", defaults={"id" = null})
+     * @Rest\Get("/user/{id}/nodes-positions")
      */
-    public function nodesAction($id = null)
+    public function nodesPositionsAction($id)
     {
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=> $id]);
         return $this->getDoctrine()->getRepository(Node::class)->findNodePositionByUser($user->getId());
     }
-
+    
     /**
      * @Rest\View()
      * @Rest\Get("/user/{id}/follows")

@@ -102,32 +102,34 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $user->setIFollow($userFollows);
 
         $image1 = new Image();
+        $image1->setCreatedAt(new \DateTime('2005-01-01'));
         $image1->setLatitude('48.8265384');
         $image1->setLongitude('2.2903647000000547');
         $image1->setImage('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Carrefour_Albert_Legris.jpg/1200px-Carrefour_Albert_Legris.jpg');
         $image1->setTitle('Vanves');
-        $image1->setCreatedAt(new \DateTime());
         $image1->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
-        $image1->setUser($user);
+        $image1->setUser($gary);
 
         $image2 = new Image();
+        $image2->setCreatedAt(new \DateTime('2008-01-01'));
         $image2->setLatitude('48.8396952');
         $image2->setLongitude('2.2399123000000145');
         $image2->setImage('http://www.lanouvellegamme.fr/photo/art/grande/9111608-14498973.jpg');
         $image2->setTitle('Boulogne-Billancourt');
-        $image2->setCreatedAt(new \DateTime());
         $image1->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
-        $image2->setUser($user);
+        $image2->setUser($gary);
 
         $image3 = new Image();
+        $image3->setCreatedAt(new \DateTime('2007-01-01'));
         $image3->setLatitude('41.820455');
         $image3->setLongitude('12.5354');
         $image3->setImage('http://www.lanouvellegamme.fr/photo/art/grande/9111608-14498973.jpg');
         $image3->setTitle('Via del Casale Marini');
         $image3->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
-        $image3->setUser($user);
+        $image3->setUser($gary);
 
         $image4 = new Image();
+        $image4->setCreatedAt(new \DateTime('2000-01-01'));
         $image4->setLatitude('36.8064948');
         $image4->setLongitude('10.181531599999971');
         $image4->setImage('http://content.maltatoday.com.mt/ui_frontend/thumbnail/684/0/4_tunis.jpg');
@@ -136,6 +138,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image4->setUser($bah);
 
         $image5 = new Image();
+        $image5->setCreatedAt(new \DateTime('2002-01-01'));
         $image5->setLatitude('35.82450290000001');
         $image5->setLongitude('10.634584000000018');
         $image5->setImage('http://www.tunisiepromo.com/wp-content/uploads/2014/11/sousse.jpg');
@@ -144,6 +147,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image5->setUser($bah);
 
         $image6 = new Image();
+        $image6->setCreatedAt(new \DateTime('2002-01-01'));
         $image6->setLatitude('64.963051');
         $image6->setLongitude('-19.020835000000034');
         $image6->setImage('https://www.nationalgeographic.com/content/dam/travel/Guide-Pages/europe/Iceland/iceland_NationalGeographic_2168279.adapt.1900.1.jpg');
@@ -152,6 +156,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image6->setUser($dolodes);
 
         $image7 = new Image();
+        $image7->setCreatedAt(new \DateTime('2002-01-01'));
         $image7->setLatitude('60.47202399999999');
         $image7->setLongitude('8.46894599999996');
         $image7->setImage('https://i2.wp.com/www.luxeinacity.com/wp-content/uploads/2015/05/Explore-Norway-Nature-Islands.jpg');
@@ -160,12 +165,13 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $image7->setUser($dolodes);
 
         $image8 = new Image();
+        $image8->setCreatedAt(new \DateTime('2002-01-01'));
         $image8->setLatitude('60.47202399999999');
         $image8->setLongitude('8.46894599999996');
         $image8->setImage('https://i2.wp.com/www.luxeinacity.com/wp-content/uploads/2015/05/Explore-Norway-Nature-Islands.jpg');
         $image8->setTitle('Norway');
         $image8->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco');
-        $image8->setUser($user);
+        $image8->setUser($dolodes);
 
 
         $manager->persist($admin);
@@ -189,11 +195,14 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $minLgt =  -1.582031 * 1000000;
         $maxLgt =  36.767578 * 1000000;
 
-        for ($i = 0; $i < 1000 ; $i++) {
+        for ($i = 0; $i < 130 ; $i++) {
             $im = new Image(mt_rand($minLat, $maxLat)/1000000, mt_rand($minLgt, $maxLgt)/1000000);
             $im->setTitle('test');
             $im->setImage('https://i2.wp.com/www.luxeinacity.com/wp-content/uploads/2015/05/Explore-Norway-Nature-Islands.jpg');
             $im->setUser($user);
+            $date = new \DateTime();
+            $date->setDate(mt_rand(1990, 2017), mt_rand(1,12), mt_rand(1,28));
+            $im->setCreatedAt($date);
             $manager->persist($im);
         }
 

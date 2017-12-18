@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Node;
 use AppBundle\Entity\User;
+use AppBundle\Filter\NodeFilter;
+use Doctrine\ORM\Query\FilterCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,4 +29,17 @@ class NodeController extends FOSRestController implements ClassResourceInterface
 
         return $node;
     }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/nodes")
+     */
+    public function nodesAction(Request $request)
+    {
+        $filter = new NodeFilter($request);
+        
+        return $this->getDoctrine()->getRepository(Node::class)
+            ->findBy($filter->getFiltersCriteria(), $filter->getOrderBy(), $filter->getLimit(), $filter->getOffset());
+    }
+
 }

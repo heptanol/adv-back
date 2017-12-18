@@ -5,6 +5,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UserService
 {
@@ -34,6 +35,11 @@ class UserService
         $data['user'] = $this->userRepository->findByUsernameDetails($id);
         $data['followStatus'] = $this->getFollowStatus($authenticateUser, $id);
         return $data;
+    }
+
+    public function getNodes(User $user, ParameterBag $query)
+    {
+        
     }
 
     /**
