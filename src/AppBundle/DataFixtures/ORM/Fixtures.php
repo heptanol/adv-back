@@ -87,11 +87,18 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $gary->setEmail('gary@gmail.com');
         $gary->setPassword($encoder->encodePassword('pass', ''));
         $gary->setEnabled(true);
+        $garyFollows = new ArrayCollection();
+        $garyFollows->add($dolodes);
+        $garyFollows->add($user);
+        $garyFollows->add($jeff);
+        $gary->setIFollow($garyFollows);
 
         $userFollows = new ArrayCollection();
         $userFollows->add($dolodes);
         $userFollows->add($gary);
         $userFollows->add($jeff);
+        $userFollows->add($nameless);
+        $userFollows->add($bah);
         $user->setIFollow($userFollows);
 
         $image1 = new Image();
