@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Image;
 use AppBundle\Entity\Node;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,13 +18,13 @@ class NodeController extends FOSRestController implements ClassResourceInterface
 {
     /**
      * @Rest\View()
-     * @Rest\Get("/node/{id}", defaults={"id" = null})
+     * @Rest\Get("/node/{id}")
      */
-    public function getAction($id = null)
+    public function getAction($id)
     {
-        if (!empty($id)) {
-            return  $this->getDoctrine()->getRepository(Node::class)->find($id);
-        }
-        return  $this->getDoctrine()->getRepository(Node::class)->findAll();
+        $node = $this->getDoctrine()->getRepository(Node::class)->find($id);
+        $node->setUser(new User());
+
+        return $node;
     }
 }
